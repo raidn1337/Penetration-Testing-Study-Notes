@@ -30,7 +30,7 @@ If you liked the old content, you can find it in the [archive](archive) folder.
   - [ ] Race Condition Testing
   - [ ] CORS Vulnerability Testing
   - [ ] Parameter Tampering
-  - [ ] Local File Inclusion / Directory Traversal
+  - [ ] Local File Inclusion / Directory Traversal    
   - [ ] IDOR
 
 ## Table of Contents
@@ -117,9 +117,11 @@ cat subdomains-live.txt | wc -l
 ```
 
 ### check Subdomains for js files/endpoints
-# httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
+httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
+```bash
 katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoints.txt
 cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
+```
 
 ### Subdomain Takeover
 
