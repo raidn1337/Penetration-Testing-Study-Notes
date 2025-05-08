@@ -125,7 +125,7 @@ cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | 
 
 ### Extract secrets from javascript files
 ```bash
-cat endpoints.txt | gau | grep ".js" | httpx -content-type -fc 301,404 | grep 'application/javascript' | awk '{print $1}' | nuclei -t /root/nuclei-templates/exposures/ -silent > secrets.txt
+cat endpoints.txt | gau | grep ".js" | httpx -content-type -fc 301,404 | grep 'application/javascript' | awk '{print $1}' | nuclei -t /home/kali/nuclei-templates/http/exposures/ -silent > secrets.txt
 ```
 
 ### Additionally use linkfinder/secretfinder/oneliner (if new kali installation always use python3 -m venv for dependencies)
