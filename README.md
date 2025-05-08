@@ -116,11 +116,15 @@ cat subdomains.txt| wc -l
 cat subdomains-live.txt | wc -l
 ```
 
-### check Subdomains for js files/endpoints
+### Check Subdomains for js files/endpoints
 httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
 ```bash
 katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoints.txt
 cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
+```
+### Extract secrets from javascript files
+```bash
+cat endpoints.txt | gau | grep ".js" | httpx -content-type | grep 'application/javascript' | awk '{print $1}' | nuclei -t /root/nuclei-templates/exposures/ -silent > secrets.txt
 ```
 
 ### Subdomain Takeover
