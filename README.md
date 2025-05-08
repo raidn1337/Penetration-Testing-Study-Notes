@@ -122,9 +122,22 @@ httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
 katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoints.txt
 cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
 ```
+
 ### Extract secrets from javascript files
 ```bash
-cat endpoints.txt | gau | grep ".js" | httpx -content-type | grep 'application/javascript' | awk '{print $1}' | nuclei -t /root/nuclei-templates/exposures/ -silent > secrets.txt
+cat endpoints.txt | gau | grep ".js" | httpx -content-type -fc 301,404 | grep 'application/javascript' | awk '{print $1}' | nuclei -t /root/nuclei-templates/exposures/ -silent > secrets.txt
+```
+
+### Additionally use linkfinder/secretfinder/oneliner (if new kali installation always use python3 -m venv for dependencies)
+```bash
+python3 linkfinder.py -i /home/kali/bounty/js.txt -o results.html  
+python3 SecretFinder.py -i /home/kali/bounty/js.txt -o results.html
+echo TARGET.com | gau | grep ".js" | httpx -content-type | grep 'application/javascript' | awk '{print $1}' | nuclei -t /root/nuclei-templates/exposures/ -silent > secrets.txt
+```
+
+### Information Disclosure
+```bash
+cat subdomains.txt | waybackurls | httpx -mc 200 -ct | grep application/json
 ```
 
 ### Subdomain Takeover
