@@ -116,6 +116,11 @@ cat subdomains.txt| wc -l
 cat subdomains-live.txt | wc -l
 ```
 
+### check Subdomains for js files/endpoints
+# httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
+katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoints.txt
+cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
+
 ### Subdomain Takeover
 
 - [Can I Take Over XYZ?](https://github.com/EdOverflow/can-i-take-over-xyz)
