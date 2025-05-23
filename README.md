@@ -123,6 +123,11 @@ katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoint
 cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
 ```
 
+```
+bash
+cat main.js | grep -oh "\"\/[a-zA-Z0-9_/?=&]*\"" | sed -e 's/^"//' -e 's/"$//' | sort -u
+```
+
 ### Extract secrets from javascript files
 ```bash
 cat endpoints.txt | gau | grep ".js" | httpx -content-type -fc 301,404 | grep 'application/javascript' | awk '{print $1}' | nuclei -t /home/kali/nuclei-templates/http/exposures/ -silent > secrets.txt
@@ -441,7 +446,7 @@ ffuf -w /usr/share/wordlists/SecLists/Fuzzing/LFI/LFI-etc-files-of-all-linux-pac
 ```
 
 ```bash
-httpx -l wayback-best-filtered-uro.txt  -silent -path  /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt  -threads 20 -random-agent -x GET,POST -status-code -follow-redirects -mc 200 -mr "root:[x*]:0:0:"*
+cat wayback-best-filtered-uro.txt| httpx -http-proxy "http://127.0.0.1:8080" -silent -path  /usr/share/seclists/Fuzzing/LFI/LFI-Jhaddix.txt  -threads 20 -random-agent -x GET,POST -status-code -follow-redirects -mc 200 -mr "root:[x*]:0:0:"*
 ```
 
 files we are intersted to see
