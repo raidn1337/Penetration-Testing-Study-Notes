@@ -439,6 +439,13 @@ corstest $TARGET
 parameth -u $TARGET
 ```
 
+### HTTP Request Smuggling
+# for a single host
+```smuggler.py -u $URL```
+
+# for a list of hosts
+```cat list_of_hosts.txt | python3 smuggler.py```
+
 ### Local File Inclusion / Directory Traversal
 
 ```bash
