@@ -120,6 +120,8 @@ cat subdomains-live.txt | wc -l
 httpx -fc 301 -> weil oftmals 301 == 404, muss aber individuell gecheckt werden
 ```bash
 katana -u active-subdomains.txt -jc -d 5 -hl | httpx -fc 404,301 | anew endpoints.txt
+```
+```bash
 cat active-subdomains.txt | waybackurl | httpx -fc 404,301 |grep -i -E "\.js" | egrep -v "\.json|\.jsp" | anew endpoints.txt
 ```
 
